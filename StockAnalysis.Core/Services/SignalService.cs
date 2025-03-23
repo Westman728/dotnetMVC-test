@@ -4,7 +4,7 @@ using StockAnalysis.Core.Services;
 using StockAnalysis.Core.Repositories;
 using StockAnalysis.Models;
 
-namespace StockAnalyzer.Core.Services
+namespace StockAnalysis.Core.Services
 {
     public interface ISignalService
     {
