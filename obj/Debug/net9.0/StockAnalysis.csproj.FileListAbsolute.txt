@@ -1,0 +1,9 @@
+C:\Users\rwest\Documents\Webdev\.net-project\StockAnalysis\obj\Debug\net9.0\StockAnalysis.csproj.AssemblyReference.cache
+C:\Users\rwest\Documents\Webdev\.net-project\StockAnalysis\obj\Debug\net9.0\StockAnalysis.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rwest\Documents\Webdev\.net-project\StockAnalysis\obj\Debug\net9.0\StockAnalysis.AssemblyInfoInputs.cache
+C:\Users\rwest\Documents\Webdev\.net-project\StockAnalysis\obj\Debug\net9.0\StockAnalysis.AssemblyInfo.cs
+C:\Users\rwest\Documents\Webdev\.net-project\StockAnalysis\obj\Debug\net9.0\StockAnalysis.csproj.CoreCompileInputs.cache
+C:\Users\rwest\Documents\Webdev\.net-project\StockAnalysis\obj\Debug\net9.0\StockAnalysis.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\rwest\Documents\Webdev\.net-project\StockAnalysis\obj\Debug\net9.0\StockAnalysis.RazorAssemblyInfo.cache
+C:\Users\rwest\Documents\Webdev\.net-project\StockAnalysis\obj\Debug\net9.0\StockAnalysis.RazorAssemblyInfo.cs
+C:\Users\rwest\Documents\Webdev\.net-project\StockAnalysis\obj\Debug\net9.0\StockAnalysis.sourcelink.json

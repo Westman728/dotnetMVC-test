@@ -14,7 +14,7 @@ namespace StockAnalysis.Web.Controllers
             _signalService = signalService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var viewModel = new SignalsViewModel
             {

@@ -9,7 +9,7 @@ namespace StockAnalysis.Web.Models
 
     public class SignalDetailsViewModel
     {
-        public string Symbol { get; set; }
+        public required string Symbol { get; set; }
         public List<StockSignal> Signals { get; set; } = new List<StockSignal>();
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

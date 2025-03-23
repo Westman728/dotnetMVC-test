@@ -2,8 +2,8 @@ namespace StockAnalysis.Models
 {
     public class StockData
     {
-        public string Symbol { get; set; }
-        public List<PricePoint> HistoricalPrices { get; set; }
+        public required string Symbol { get; set; }
+        public required List<PricePoint> HistoricalPrices { get; set; }
     }
     public class PricePoint
     {
