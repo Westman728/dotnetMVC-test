@@ -1,0 +1,39 @@
+@model StockAnalysis.Web.Models.SignalsViewModel
+@{
+    ViewData["Title"] = "Stock Signals";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Stock Signal Analyzer</h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        This application combines a LSTM model predictions with a .NET backend to deliver
+                        actionable trading signals. Select a stock to view its latest signals.
+                    </p>
+                    
+                    <h4>Available Stocks</h4>
+                    <div class="row">
+                        @foreach (var symbol in Model.AvailableSymbols)
+                        {
+                            <div class="col-md-3 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">@symbol</h5>
+                                        <a asp-action="Details" asp-route-symbol="@symbol" class="btn btn-outline-primary">
+                                            View Signals
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

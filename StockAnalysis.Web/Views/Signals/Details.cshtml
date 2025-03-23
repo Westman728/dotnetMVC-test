@@ -1,0 +1,192 @@
+@model StockAnalysis.Web.Models.SignalDetailsViewModel
+@{
+    ViewData["Title"] = $"{Model.Symbol} details";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">@Model.Symbol Signals</h3>
+                    <a asp-action="Index" class="btn btn-outline-light">Back to List</a>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h4>Date Range</h4>
+                        <form asp-action="Refresh" method="post" class="form-inline">
+                            <input type="hidden" name="symbol" value="@Model.Symbol" />
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label for="startDate" class="col-form-label">From:</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" id="startDate" name="startDate" class="form-control" 
+                                           value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+                                </div>
+                                <div class="col-auto">
+                                    <label for="endDate" class="col-form-label">To:</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" id="endDate" name="endDate" class="form-control" 
+                                           value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Refresh Data</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Latest Signal Card -->
+                    @if (Model.Signals.Any())
+                    {
+                        var latestSignal = Model.Signals.OrderByDescending(s => s.TimeStamp).First();
+                        <div class="mb-4">
+                            <h4>Latest Signal</h4>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5>@latestSignal.TimeStamp.ToString("g")</h5>
+                                            <h2 class="@GetSignalClass(latestSignal.Signal)">
+                                                @latestSignal.Signal.ToString().ToUpper()
+                                            </h2>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="mb-1">Current Price</p>
+                                            <h3>$@latestSignal.CurrentPrice.ToString("F2")</h3>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="mb-1">Predicted Price</p>
+                                            <h3>$@latestSignal.PredictedPrice.ToString("F2")</h3>
+                                            <p class="mb-1">Confidence: @(latestSignal.Confidence.ToString("P1"))</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Signal Chart -->
+                    <div class="mb-4">
+                        <h4>Signal History</h4>
+                        <canvas id="signalChart" width="400" height="200"></canvas>
+                    </div>
+
+                    <!-- Signal Table -->
+                    <div>
+                        <h4>Signal Details</h4>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Signal</th>
+                                        <th>Current Price</th>
+                                        <th>Predicted Price</th>
+                                        <th>Confidence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var signal in Model.Signals.OrderByDescending(s => s.TimeStamp))
+                                    {
+                                        <tr>
+                                            <td>@signal.TimeStamp.ToString("g")</td>
+                                            <td>
+                                                <span class="badge rounded-pill @GetSignalClass(signal.Signal)">
+                                                    @signal.Signal.ToString().ToUpper()
+                                                </span>
+                                            </td>
+                                            <td>$@signal.CurrentPrice.ToString("F2")</td>
+                                            <td>$@signal.PredictedPrice.ToString("F2")</td>
+                                            <td>@signal.Confidence.ToString("P1")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prepare chart data
+            const signals = @Json.Serialize(Model.Signals.OrderBy(s => s.TimeStamp));
+            const dates = signals.map(s => new Date(s.timeStamp).toLocaleDateString());
+            const currentPrices = signals.map(s => s.currentPrice);
+            const predictedPrices = signals.map(s => s.predictedPrice);
+            
+            // Create chart
+            const ctx = document.getElementById('signalChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [
+                        {
+                            label: 'Current Price',
+                            data: currentPrices,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Predicted Price',
+                            data: predictedPrices,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderDash: [5, 5],
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '@Model.Symbol Price History and Predictions'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toFixed(2);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}
+
+@functions {
+    string GetSignalClass(StockAnalysis.Models.SignalType signalType)
+    {
+        return signalType switch
+        {
+            StockAnalysis.Models.SignalType.Buy => "text-success bg-success-subtle",
+            StockAnalysis.Models.SignalType.Sell => "text-danger bg-danger-subtle",
+            StockAnalysis.Models.SignalType.Hold => "text-warning bg-warning-subtle",
+            _ => "text-secondary bg-secondary-subtle"
+        };
+    }
+}
