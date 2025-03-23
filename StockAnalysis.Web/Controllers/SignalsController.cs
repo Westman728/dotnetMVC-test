@@ -75,5 +75,17 @@ namespace StockAnalysis.Web.Controllers
             
             return Json(signals);
         }
+        public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Error()
+        {
+            return View();
+        }
+    }
     }
 }
