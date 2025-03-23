@@ -1,6 +1,6 @@
 // ASP .NET CORE MVC CONTROLLER
 using Microsoft.AspNetCore.Mvc;
-using StockAnalysis.Models;
+using StockAnalysis.Web.Models;
 using StockAnalysis.Core.Services;
 
 namespace StockAnalysis.Web.Controllers
