@@ -10,13 +10,11 @@
         "projectUniqueName": "C:\\Users\\rwest\\Documents\\Webdev\\.net-project\\StockAnalysis\\StockAnalysis.Models\\StockAnalysis.Models.csproj",
         "projectName": "StockAnalysis.Models",
         "projectPath": "C:\\Users\\rwest\\Documents\\Webdev\\.net-project\\StockAnalysis\\StockAnalysis.Models\\StockAnalysis.Models.csproj",
-        "packagesPath": "C:\\Users\\rwest\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\rwest\\.nuget\\packages",
         "outputPath": "C:\\Users\\rwest\\Documents\\Webdev\\.net-project\\StockAnalysis\\StockAnalysis.Models\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "D:\\Shared Components\\NuGetPackages"
-        ],
         "configFilePaths": [
+          "C:\\Users\\rwest\\Documents\\Webdev\\.net-project\\StockAnalysis\\NuGet.Config",
           "C:\\Users\\rwest\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -25,7 +23,6 @@
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
